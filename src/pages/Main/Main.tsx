@@ -4,8 +4,10 @@ import { ThemeButton } from "../../ui/ThemeButton";
 import { Calculator } from "../../ui/Calculator";
 import { HistoryList } from "../../ui/HistoryList";
 import { IHistory } from "../../types/IHistory";
-
-type TCalculatorMode = "calculator" | "history";
+import { UnloadButton } from "../../ui/UnloadButton";
+import { ChangeMode } from "../../ui/ChangeMode";
+import { TCalculatorMode } from "../../types/TCalculatorMode";
+import { evaluate } from "mathjs";
 
 type MainProps = {};
 
@@ -22,18 +24,26 @@ export const Main: FC<MainProps> = () => {
   const theme = themeObject.theme;
   const setTheme = themeObject.setTheme;
 
+  // handle click on calculator buttons
   const handleButton = (value: string) => {
-    setCurrentValue((prevCurrentValue) => prevCurrentValue + value);
+    setCurrentValue(currentValue + value);
   };
 
+  // clean main input
   const cleanInput = () => {
     setCurrentValue("");
     setPrevValue("");
   };
 
+  // backspace
+  const backspace = () => {
+    setCurrentValue(currentValue.slice(0, -1));
+  };
+
+  // calculate expression
   const calculate = () => {
     const expression = currentValue;
-    const answer = eval(currentValue);
+    const answer = evaluate(currentValue);
 
     setPrevValue(currentValue);
     setCurrentValue(answer);
@@ -47,42 +57,45 @@ export const Main: FC<MainProps> = () => {
     ]);
   };
 
+  // change theme
   const changeTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
+  // change mode
   const changeMode = (value: TCalculatorMode) => {
     setCalculatorMode(value);
+  };
+
+  // unload txt history file
+  const unloadHistory = () => {
+    let textContent = "Calculator History:\n\n";
+
+    historyList.forEach((entry) => {
+      textContent += `${entry.expression} = ${entry.answer}\n`;
+    });
+
+    const blob = new Blob([textContent], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "calculator_history.txt";
+    link.click();
   };
 
   return (
     <div className="h-screen flex items-center">
       <div className="container mx-auto bg-slate-200 dark:bg-stone-800 w-2/6 h-4/5 pt-7 rounded-md p-10 font-mono text-5xl duration-150 shadow-2xl shadow-stone-400/100">
-        <div className="w-full flex justify-center mb-2">
-          <div className="text-base text-white flex gap-10">
-            <button
-              className={`${
-                calculatorMode === "calculator"
-                  ? "dark:hover:text-white dark:hover:text-white hover:text-stone-500 duration-100 text-red-500"
-                  : "dark:text-white text-stone-500 dark:hover:text-red-500 hover:text-red-500 duration-100"
-              }`}
-              onClick={() => changeMode("calculator")}
-            >
-              Calculator
-            </button>
-            <button
-              className={`${
-                calculatorMode === "history"
-                  ? "dark:hover:text-white dark:hover:text-white hover:text-stone-500 duration-100 text-red-500"
-                  : "dark:text-white text-stone-500 dark:hover:text-red-500 hover:text-red-500 duration-100"
-              }`}
-              onClick={() => changeMode("history")}
-            >
-              History
-            </button>
+        <ChangeMode calculatorMode={calculatorMode} changeMode={changeMode} />
+        {calculatorMode === "calculator" ? (
+          <div className="flex items-center mb-2">
+            <ThemeButton theme={theme} changeTheme={changeTheme} />
           </div>
-        </div>
-        <ThemeButton theme={theme} changeTheme={changeTheme} />
+        ) : (
+          <div className="flex items-center justify-between mb-5">
+            <ThemeButton theme={theme} changeTheme={changeTheme} />
+            <UnloadButton unloadHistory={unloadHistory} />
+          </div>
+        )}
         {calculatorMode === "calculator" ? (
           <Calculator
             prevValue={prevValue}
@@ -90,6 +103,7 @@ export const Main: FC<MainProps> = () => {
             setCurrentValue={setCurrentValue}
             handleButton={handleButton}
             cleanInput={cleanInput}
+            backspace={backspace}
             calculate={calculate}
           />
         ) : (
