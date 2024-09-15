@@ -1,50 +1,60 @@
-# React + TypeScript + Vite
+# Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Описание
 
-Currently, two official plugins are available:
+**Calculator** - Проект представляет собой многофункциональное приложение, которое предлагает пользователям удобный интерфейс для выполнения математических вычислений и управления историей расчетов.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Основные особенности
 
-## Expanding the ESLint configuration
+- **Базовые арифметические операции**: Сложение, вычитание, умножение и деление.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Расширенные математические функции**: Поддержка тригонометрических функций (sin, cos), логарифмов (log), и других научных функций для более сложных расчетов.
 
-- Configure the top-level `parserOptions` property like this:
+- **История расчетов**: Возможность просматривать историю предыдущих вычислений, что позволяет пользователям легко отслеживать и повторять прошлые расчеты.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Экспорт истории**: Функция для выгрузки истории расчетов в файл, что удобно для дальнейшего анализа или хранения данных.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **Пометка задач как выполненных** - Задачи могут быть отмечены как выполненные, что позволяет отслеживать прогресс выполнения.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- **Тема интерфейса**: Возможность переключаться между светлой и темной темами, что позволяет адаптировать внешний вид калькулятора в зависимости от предпочтений пользователя и условий освещения.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- **Режим калькулятора и истории**: Простое переключение между режимом калькулятора и режимом просмотра истории расчетов, что обеспечивает удобный доступ к нужной информации и функциям.
+
+### Структура проекта
+
+`index.html` - Основной HTML файл
+
+- `src/` - Исходный код.
+  - `App.tsx` - Главый компонент.
+  - `main.tsx` - Компонент отрисовывающий App-компонент.
+  - `ui/` - Каталог с ui компонентами.
+  - `providers/` - Каталог с React-провайдерами.
+  - `pages/` - Каталог с компонентами с бизнес-логикой.
+  - `types/` - Каталог с типами и интерефейсами.
+- `package.json` - Файл зависимостей и скриптов.
+- `tsconfig.json` - Файл с конфигурацией TypeScript.
+- `vite.config.ts` - Файл с конфигурацией Vite
+- `tsconfig.node.json` - Файл с конфигурацией TypeScript при работе с Node.js
+- `.gitignore` - Файл с исключением отслеживания git каталогов и файлов
+- `.eslintrc.cjs` - Файл с настройкой линтера ESLint
+- `.editorconfig` - Файл с настройкой плагина editorconfig
+
+### Установка
+
+1. Установка репозитория.
+
+````bash
+git clone  https://github.com/rashupkintimur/calculator.git
+
+2. Перейдите в репозиторий и установите зависимости.
+
+```bash
+cd Todos && npm i
+
+3. Запустите проект
+
+```bash
+npm run dev
+
+4. Откройте браузер и перейдите по адресу http://localhost:3000
+````
