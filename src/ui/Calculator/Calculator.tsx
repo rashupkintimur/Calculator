@@ -59,7 +59,7 @@ export const Calculator: FC<CalculatorProps> = ({
             viewBox="0 0 24 24"
             width="30"
             height="30"
-            className="dark:hover:fill-red-500 hover:fill-red-500 fill-stone-800 dark:fill-white active:text-fill-700 dark:active:fill-red-700 duration-100 fill-white duration-100"
+            className="dark:hover:fill-red-500 hover:fill-red-500 fill-stone-800 dark:fill-white active:text-fill-700 dark:active:fill-red-700 duration-100 duration-100"
           >
             <path d="M15.41 7.41L9.83 13 15.41 18.59 14 20l-7-7 7-7 1.41 1.41z" />
           </svg>
