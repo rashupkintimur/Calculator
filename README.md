@@ -44,7 +44,7 @@
 1. Установка репозитория.
 
 ```bash
-git clone  https://github.com/rashupkintimur/calculator.git
+git clone  https://github.com/rashupkintimur/Calculator.git
 ```
 
 2. Перейдите в репозиторий и установите зависимости.
